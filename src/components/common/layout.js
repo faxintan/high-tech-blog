@@ -40,14 +40,17 @@ class Layout extends React.Component {
     super(props);
 
     const { t, pageContext: p } = props;
-    const curThemeName = localStorage.getItem(`theme_${p.lng}`);
+    let curThemeName = t('Default');
+    if (process.env.BROWSER) {
+      curThemeName = localStorage.getItem(`theme_${p.lng}`);
+    }
     this.themes = getAllThemes(props.t);
     this.languages = getAllLanguages(props.t);
 
     this.state = {
       anchorEl: null,
       popType: POP_HIDDEN,
-      theme: this.themes[curThemeName || t('Default')],
+      theme: this.themes[curThemeName],
     };
   }
 
@@ -72,7 +75,9 @@ class Layout extends React.Component {
   handleSwitchTheme = name => {
     if (!Object.keys(this.themes).includes(name)) return;
     const { pageContext: p } = this.props;
-    localStorage.setItem(`theme_${p.lng}`, name);
+    if (process.env.BROWSER) {
+      localStorage.setItem(`theme_${p.lng}`, name);
+    }
     this.setState({ theme: this.themes[name] });
   };
 

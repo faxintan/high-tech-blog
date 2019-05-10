@@ -5,7 +5,7 @@
   "version": "0.1.0",
   "license": "MIT",
   "scripts": {
-    "build": "gatsby build",
+    "build": "gatsby build & mv public ..",
     "develop": "gatsby develop",
     "format": "prettier --write src/**/*.{js,jsx}",
     "start": "npm run develop",
@@ -17,6 +17,7 @@
     "@material-ui/icons": "^4.0.0-beta.0",
     "@material-ui/styles": "^4.0.0-beta.0",
     "core-js": "^2.6.5",
+    "firebase": "^6.0.2",
     "gatsby": "^2.3.34",
     "gatsby-plugin-i18next": "^1.1.7",
     "gatsby-plugin-material-ui": "^2.0.0-alpha.6",

@@ -9,33 +9,12 @@ const language = {
   fallbackNS: ['translation'], // travels these if assigned and default namespace not found
 };
 
-// Material UI Theme Config
-const theme = {
-  primaryColor: '#9c27b0',
-  // paletter: {
-  //   // type: 'dark',
-  //   primary: {
-  //     // light: palette.primary[300],
-  //     main: colors.dark,
-  //     // dark: palette.primary[700],
-  //     // contrastText: getContrastText(palette.primary[500]),
-  //   },
-  //   secondary: {
-  //     main: colors.grey,
-  //   },
-  //   error: {
-  //     main: colors.red,
-  //   },
-  // },
-};
-
 // Application Config
 module.exports = {
   siteMetadata: {
-    theme,
     language,
-    title: 'My i18next Gatsby',
-    description: 'just for learning project',
+    title: 'High-Tech Blog',
+    description: 'An Awesome Blog',
   },
   plugins: [
     {

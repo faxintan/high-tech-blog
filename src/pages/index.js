@@ -3,7 +3,7 @@ import { translate } from 'react-i18next';
 import { withI18next } from 'gatsby-plugin-i18next';
 import { withStyles } from '@material-ui/styles';
 
-import Layout from '../components/common/layout';
+import Layout from '@components/common/layout';
 
 const styles = {
   root: {

@@ -4,7 +4,7 @@
  * @returns {object}
  */
 export function pick(obj, props = []) {
-  let newObj = new Object(null);
+  let newObj = Object(null);
   for (let key in obj) {
     if (props.includes(key)) newObj[key] = obj[key];
   }
@@ -17,7 +17,7 @@ export function pick(obj, props = []) {
  * @returns {object}
  */
 export function omit(obj, props = []) {
-  let newObj = new Object(null);
+  let newObj = Object(null);
   for (let key in obj) {
     if (!props.includes(key)) newObj[key] = obj[key];
   }

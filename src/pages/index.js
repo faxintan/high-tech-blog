@@ -5,13 +5,6 @@ import { withStyles } from '@material-ui/styles';
 
 import Layout from '@components/common/layout';
 
-const styles = {
-  root: {
-    width: '100%',
-    height: '80px',
-  },
-};
-
 class IndexPage extends React.PureComponent {
   render() {
     const { t } = this.props;
@@ -23,6 +16,13 @@ class IndexPage extends React.PureComponent {
     );
   }
 }
+
+const styles = {
+  root: {
+    width: '100%',
+    height: '80px',
+  },
+};
 
 export default withI18next()(translate()(withStyles(styles)(IndexPage)));
 

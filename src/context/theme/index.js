@@ -1,11 +1,20 @@
 import React from 'react';
+import { translate } from 'react-i18next';
 import getThemeList from '@context/theme/list';
-import { ThemeProvider } from '@material-ui/styles';
+import { ThemeProvider as MuiThemeProvider } from '@material-ui/styles';
 import { pick, str_encrypt, str_decrypt } from '@utils/index';
+
+/*
+ ** theme context module
+ **
+ ** @props         -       current: themeID
+ ** @methods       -       getAll, getById, updateById
+ ** @params        -       data(graphQL), pageContext
+ */
 
 const themeContext = React.createContext({});
 
-export default class extends React.PureComponent {
+class ThemeProvider extends React.PureComponent {
   constructor(props) {
     super(props);
 
@@ -20,8 +29,8 @@ export default class extends React.PureComponent {
     }
   }
 
-  getList = () => {
-    return this._themes;
+  getAll = () => {
+    return this._themes.slice();
   };
 
   getById = id => {
@@ -41,16 +50,20 @@ export default class extends React.PureComponent {
   render() {
     const { id, instance } = this.state.theme;
     const theme = Object.assign(
-      pick(this, ['getList', 'getById', 'updateById']),
+      pick(this, ['getAll', 'getById', 'updateById']),
       { current: id }
     );
     return (
       <themeContext.Provider value={theme}>
-        <ThemeProvider theme={instance}>{this.props.children}</ThemeProvider>
+        <MuiThemeProvider theme={instance}>
+          {this.props.children}
+        </MuiThemeProvider>
       </themeContext.Provider>
     );
   }
 }
+
+export default translate()(ThemeProvider);
 
 export const withTheme = Component => props => {
   return (

@@ -8,7 +8,7 @@ import Typography from '@material-ui/core/Typography';
 import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
 
-import SearchBar from '../ui/searchbar';
+import SearchBar from '@components/common/searchbar';
 
 class Header extends React.Component {
   render() {

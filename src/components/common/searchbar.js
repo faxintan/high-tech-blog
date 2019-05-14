@@ -5,6 +5,26 @@ import InputBase from '@material-ui/core/InputBase';
 import SearchIcon from '@material-ui/icons/Search';
 import { fade } from '@material-ui/core/styles/colorManipulator';
 
+class SearchBar extends React.Component {
+  render() {
+    const { t, classes, className } = this.props;
+    return (
+      <div className={classes.search + ' ' + className}>
+        <div className={classes.searchIcon}>
+          <SearchIcon />
+        </div>
+        <InputBase
+          placeholder={`${t('Search')}...`}
+          classes={{
+            root: classes.inputRoot,
+            input: classes.inputInput,
+          }}
+        />
+      </div>
+    );
+  }
+}
+
 const styles = theme => {
   return {
     search: {
@@ -41,25 +61,5 @@ const styles = theme => {
     },
   };
 };
-
-class SearchBar extends React.Component {
-  render() {
-    const { t, classes, className } = this.props;
-    return (
-      <div className={classes.search + ' ' + className}>
-        <div className={classes.searchIcon}>
-          <SearchIcon />
-        </div>
-        <InputBase
-          placeholder={`${t('Search')}...`}
-          classes={{
-            root: classes.inputRoot,
-            input: classes.inputInput,
-          }}
-        />
-      </div>
-    );
-  }
-}
 
 export default translate()(withStyles(styles)(SearchBar));

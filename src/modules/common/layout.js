@@ -7,7 +7,7 @@ import AppsIcon from '@material-ui/icons/Apps';
 import LanguageIcon from '@material-ui/icons/Language';
 
 import DropDown from '@components/common/dropdown';
-import DefaultHeader from '@components/common/header';
+import DefaultHeader from '@modules/common/header';
 import FirebaseProvider from '@context/firebase/index';
 import ThemeProvider, { withTheme } from '@context/theme/index';
 import I18nextProvider, { withI18next } from '@context/i18next/index';

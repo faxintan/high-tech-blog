@@ -1,9 +1,8 @@
 import React from 'react';
 import { translate } from 'react-i18next';
 import { withI18next } from 'gatsby-plugin-i18next';
-import { withStyles } from '@material-ui/styles';
 
-import Layout from '@components/common/layout';
+import Layout from '@modules/common/layout';
 
 class IndexPage extends React.PureComponent {
   render() {
@@ -17,14 +16,7 @@ class IndexPage extends React.PureComponent {
   }
 }
 
-const styles = {
-  root: {
-    width: '100%',
-    height: '80px',
-  },
-};
-
-export default withI18next()(translate()(withStyles(styles)(IndexPage)));
+export default withI18next()(translate()(IndexPage));
 
 export const query = graphql`
   query($lng: String!) {

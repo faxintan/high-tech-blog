@@ -6,8 +6,8 @@ import Toolbar from '@material-ui/core/Toolbar';
 import Hidden from '@material-ui/core/Hidden';
 import Typography from '@material-ui/core/Typography';
 import IconButton from '@material-ui/core/IconButton';
-import MenuIcon from '@material-ui/icons/Menu';
 
+import Avatar from '@/modules/common/avatar';
 import SearchBar from '@components/common/searchbar';
 
 class Header extends React.Component {
@@ -18,7 +18,7 @@ class Header extends React.Component {
       <AppBar position="static">
         <Toolbar>
           <IconButton edge="start" color="secondary" aria-label="Open drawer">
-            <MenuIcon />
+            <Avatar />
           </IconButton>
 
           <Hidden xsDown>

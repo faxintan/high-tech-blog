@@ -69,7 +69,7 @@ class Layout extends React.Component {
     return (
       <FirebaseProvider>
         <I18nextProvider pageContext={pageContext}>
-          <ThemeProvider>
+          <ThemeProvider isSupportI18next={true}>
             <CssBaseline />
 
             <Grid
@@ -118,6 +118,7 @@ class Layout extends React.Component {
               </Grid>
 
               <Popover
+                id={123}
                 open={Boolean(popType)}
                 anchorEl={anchorEl}
                 anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}

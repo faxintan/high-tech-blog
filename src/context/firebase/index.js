@@ -1,7 +1,5 @@
 import React from 'react';
-import * as firebase from 'firebase/app';
-import FirebaseAuthProvider from '@context/firebase/auth';
-import FirebaseStoreProvider from '@context/firebase/firestore';
+import FirebaseAuth from '@context/firebase/auth';
 
 const config = {
   apiKey: 'AIzaSyBVJ1bOpbijAVO7VgU9_Vs9EtdYTUs1LVM',
@@ -16,21 +14,41 @@ const config = {
 const FirebaseAppContext = React.createContext({});
 
 class FirebaseAppProvider extends React.PureComponent {
-  constructor(props) {
-    super(props);
-    this.app = firebase.apps.length
-      ? firebase.app()
-      : firebase.initializeApp(props.config || config);
+  state = {
+    user: null,
+    auth: null,
+    store: null,
+    firebase: null,
+  };
+
+  componentDidMount() {
+    const firebase = import('firebase/app');
+    const fireauth = import('firebase/auth');
+    const firestore = import('firebase/firestore');
+
+    Promise.all([firebase, fireauth, firestore]).then(values => {
+      const app = values[0].apps.length
+        ? values[0].app()
+        : values[0].initializeApp(config);
+
+      const auth = new FirebaseAuth(values[0], app.auth(), config);
+
+      auth.onAuthStateChanged(user => {
+        this.setState({ user });
+      });
+
+      this.setState({
+        auth,
+        firebase: app,
+        store: app.firestore(),
+      });
+    });
   }
 
   render() {
     return (
-      <FirebaseAppContext.Provider value={this.app}>
-        <FirebaseAuthProvider firebaseApp={this.app}>
-          <FirebaseStoreProvider firebaseApp={this.app}>
-            {this.props.children}
-          </FirebaseStoreProvider>
-        </FirebaseAuthProvider>
+      <FirebaseAppContext.Provider value={this.state}>
+        {this.props.children}
       </FirebaseAppContext.Provider>
     );
   }
@@ -40,6 +58,6 @@ export default FirebaseAppProvider;
 
 export const withFirebaseApp = Component => props => (
   <FirebaseAppContext.Consumer>
-    {firebaseApp => <Component {...props} firebaseApp={firebaseApp} />}
+    {firebaseApp => <Component {...props} {...firebaseApp} />}
   </FirebaseAppContext.Consumer>
 );

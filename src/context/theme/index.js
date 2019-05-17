@@ -63,7 +63,14 @@ class ThemeProvider extends React.PureComponent {
   }
 }
 
-export default translate()(ThemeProvider);
+export default props => {
+  const I18nextThemeProvider = translate()(ThemeProvider);
+  return props.isSupportI18next ? (
+    <I18nextThemeProvider {...props} />
+  ) : (
+    <ThemeProvider {...props} t={s => s} />
+  );
+};
 
 export const withTheme = Component => props => {
   return (

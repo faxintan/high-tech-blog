@@ -2,14 +2,10 @@ import React from 'react';
 import Avatar from '@material-ui/core/Avatar';
 import AvatarImage from '@assets/images/avatar.png';
 import { withStyles } from '@material-ui/styles';
-import { withFirebaseAuth } from '@context/firebase/auth';
+import { withFirebaseApp } from '@context/firebase/index';
 
 const UserAvatar = props => {
-  const {
-    classes,
-    auth: { user },
-  } = props;
-
+  const { user, classes } = props;
   return user ? (
     <Avatar className={classes.avatar} src={user.photoURL ? user.photoURL : ''}>
       {user.photoURL ? '' : user.displayName.substr(0, 1)}
@@ -32,4 +28,4 @@ const styles = theme => {
   };
 };
 
-export default withFirebaseAuth(withStyles(styles)(UserAvatar));
+export default withFirebaseApp(withStyles(styles)(UserAvatar));

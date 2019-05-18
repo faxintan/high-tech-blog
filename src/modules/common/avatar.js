@@ -5,9 +5,13 @@ import { withStyles } from '@material-ui/styles';
 import { withFirebaseApp } from '@context/firebase/index';
 
 const UserAvatar = props => {
-  const { user, classes } = props;
+  const { sizes, user, classes } = props;
   return user ? (
-    <Avatar className={classes.avatar} src={user.photoURL ? user.photoURL : ''}>
+    <Avatar
+      style={{ width: sizes, height: sizes }}
+      className={classes.avatar}
+      src={user.photoURL ? user.photoURL : ''}
+    >
       {user.photoURL ? '' : user.displayName.substr(0, 1)}
     </Avatar>
   ) : (

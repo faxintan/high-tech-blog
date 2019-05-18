@@ -4,20 +4,81 @@ import { withStyles } from '@material-ui/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Hidden from '@material-ui/core/Hidden';
-import Typography from '@material-ui/core/Typography';
+import Popover from '@material-ui/core/Popover';
+import AppsIcon from '@material-ui/icons/Apps';
 import IconButton from '@material-ui/core/IconButton';
+import Typography from '@material-ui/core/Typography';
+import LanguageIcon from '@material-ui/icons/Language';
 
 import Avatar from '@/modules/common/avatar';
+import DropDown from '@components/common/dropdown';
 import SearchBar from '@components/common/searchbar';
+import { withTheme } from '@context/theme/index';
+import { withI18next } from '@context/i18next/index';
+
+const POP_HIDDEN = 0;
+const POP_SHOW_SWITCH_THEME = 1;
+const POP_SHOW_SWITCH_LANGUAGE = 2;
+
+const DrowDownThemes = withTheme(props => {
+  const { current, getAll, updateById } = props.theme;
+  return (
+    <DropDown
+      data={getAll()}
+      checked={current}
+      handleSelect={item => updateById(item.id)}
+    />
+  );
+});
+
+const DrowDownLanguage = withI18next(props => {
+  const { lng, getAll, updateById } = props.i18next;
+  return (
+    <DropDown
+      data={getAll()}
+      checked={lng}
+      handleSelect={item => updateById(item.id)}
+    />
+  );
+});
 
 class Header extends React.Component {
+  state = {
+    anchorEl: null,
+    popType: POP_HIDDEN,
+  };
+
+  handleShowLngPopover = event => {
+    this.setState({
+      anchorEl: event.currentTarget,
+      popType: POP_SHOW_SWITCH_LANGUAGE,
+    });
+  };
+
+  handleShowThemePopover = event => {
+    this.setState({
+      anchorEl: event.currentTarget,
+      popType: POP_SHOW_SWITCH_THEME,
+    });
+  };
+
+  handleClosePopover = () => {
+    this.setState({ anchorEl: null, popType: POP_HIDDEN });
+  };
+
   render() {
-    const { t, classes, actions } = this.props;
+    const { popType, anchorEl } = this.state;
+    const { t, classes, onClick, onChange } = this.props;
 
     return (
       <AppBar position="static">
         <Toolbar>
-          <IconButton edge="start" color="secondary" aria-label="Open drawer">
+          <IconButton
+            edge="start"
+            color="secondary"
+            aria-label="Open drawer"
+            onClick={onClick}
+          >
             <Avatar />
           </IconButton>
 
@@ -29,10 +90,31 @@ class Header extends React.Component {
 
           <div className={classes.span} />
 
-          <SearchBar className={classes.search} />
+          <SearchBar className={classes.search} onChange={onChange} />
 
-          {actions}
+          <IconButton color="secondary" onClick={this.handleShowLngPopover}>
+            <LanguageIcon />
+          </IconButton>
+
+          <IconButton
+            edge="end"
+            color="secondary"
+            onClick={this.handleShowThemePopover}
+          >
+            <AppsIcon />
+          </IconButton>
         </Toolbar>
+
+        <Popover
+          open={Boolean(popType)}
+          anchorEl={anchorEl}
+          anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
+          transformOrigin={{ vertical: 'top', horizontal: 'center' }}
+          onClose={this.handleClosePopover}
+        >
+          {popType === POP_SHOW_SWITCH_THEME && <DrowDownThemes />}
+          {popType === POP_SHOW_SWITCH_LANGUAGE && <DrowDownLanguage />}
+        </Popover>
       </AppBar>
     );
   }

@@ -6,7 +6,6 @@ import { fade } from '@material-ui/core/styles/colorManipulator';
 
 class SearchBar extends React.Component {
   handleInputChange = event => {
-    console.log(event);
     this.props.onChange && this.props.onChange(event.target.value);
   };
 

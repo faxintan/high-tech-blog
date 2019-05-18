@@ -23,10 +23,8 @@ class ThemeProvider extends React.PureComponent {
   }
 
   componentDidMount() {
-    if (process.env.BROWSER) {
-      const id = str_decrypt(localStorage.getItem('theme')); // TODO(Louis): optimize
-      this.setState({ theme: this.getById(id) || this._themes[0] });
-    }
+    const id = str_decrypt(localStorage.getItem('theme')); // TODO(Louis): optimize
+    this.setState({ theme: this.getById(id) || this._themes[0] });
   }
 
   getAll = () => {
@@ -41,9 +39,7 @@ class ThemeProvider extends React.PureComponent {
   updateById = id => {
     const theme = this.getById(id);
     if (!theme) return;
-    if (process.env.BROWSER) {
-      localStorage.setItem('theme', str_encrypt(theme.id));
-    }
+    localStorage.setItem('theme', str_encrypt(theme.id));
     this.setState({ theme });
   };
 
@@ -63,14 +59,17 @@ class ThemeProvider extends React.PureComponent {
   }
 }
 
-export default props => {
-  const I18nextThemeProvider = translate()(ThemeProvider);
-  return props.isSupportI18next ? (
-    <I18nextThemeProvider {...props} />
-  ) : (
-    <ThemeProvider {...props} t={s => s} />
-  );
-};
+// export default props => {
+//   const I18nextThemeProvider = translate()(ThemeProvider);
+//   return props.isSupportI18next ? (
+//     /* popover 错位 */
+//     <I18nextThemeProvider {...props} />
+//   ) : (
+//     <ThemeProvider {...props} t={s => s} />
+//   );
+// };
+
+export default translate()(ThemeProvider);
 
 export const withTheme = Component => props => {
   return (

@@ -31,7 +31,7 @@ class Header extends React.Component {
 
           <SearchBar className={classes.search} />
 
-          <Hidden xsDown>{actions}</Hidden>
+          {actions}
         </Toolbar>
       </AppBar>
     );
@@ -47,7 +47,7 @@ const styles = theme => {
       marginLeft: theme.spacing(3),
     },
     search: {
-      marginRight: theme.spacing(3),
+      marginRight: theme.spacing(2),
     },
     span: {
       flexGrow: 1,

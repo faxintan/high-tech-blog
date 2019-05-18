@@ -13,7 +13,7 @@ const language = {
 module.exports = {
   siteMetadata: {
     language,
-    title: 'High-Tech Blog',
+    title: 'Hi-Tech Blog',
     description: 'An Awesome Blog',
   },
   plugins: [

@@ -23,7 +23,7 @@ class Header extends React.Component {
 
           <Hidden xsDown>
             <Typography className={classes.title} variant="h5" noWrap>
-              {t('High-Tech Blog')}
+              {t('Hi-Tech Blog')}
             </Typography>
           </Hidden>
 

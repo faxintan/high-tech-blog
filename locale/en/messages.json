@@ -1,12 +1,12 @@
 {
-    "High-Tech Blog": "High-Tech Blog",
-    "confirm": "confirm",
-    "cancel": "cancel",
-    "Chinese": "Chinese",
-    "English": "English",
-    "Default": "Default",
-    "White": "White",
-    "Search": "Search",
-    "Hello Gatsby": "Hello Gatsby"
-  }
-  
+  "HTBlog": "HTBlog",
+  "Hi-Tech Blog": "Hi-Tech Blog",
+  "confirm": "confirm",
+  "cancel": "cancel",
+  "Chinese": "Chinese",
+  "English": "English",
+  "Default": "Default",
+  "White": "White",
+  "Search": "Search",
+  "Hello Gatsby": "Hello Gatsby"
+}

@@ -88,17 +88,17 @@ class DialogLogin extends React.Component {
             <Grid className={classes.provider} container>
               <Grid item xs={3} />
               <Grid className={classes.icon} item xs={2}>
-                <IconButton onClick={() => onLoginWithProvider(1)}>
+                <IconButton onClick={() => onLoginWithProvider(0)}>
                   <Avatar>G</Avatar>
                 </IconButton>
               </Grid>
               <Grid className={classes.icon} item xs={2}>
-                <IconButton onClick={() => onLoginWithProvider(2)}>
+                <IconButton onClick={() => onLoginWithProvider(1)}>
                   <Avatar>F</Avatar>
                 </IconButton>
               </Grid>
               <Grid className={classes.icon} item xs={2}>
-                <IconButton onClick={() => onLoginWithProvider(3)}>
+                <IconButton onClick={() => onLoginWithProvider(2)}>
                   <Avatar>T</Avatar>
                 </IconButton>
               </Grid>

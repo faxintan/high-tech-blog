@@ -8,14 +8,18 @@ const UserAvatar = props => {
   const { sizes, user, classes } = props;
   return user ? (
     <Avatar
-      style={{ width: sizes, height: sizes }}
       className={classes.avatar}
+      style={{ width: sizes, height: sizes }}
       src={user.photoURL ? user.photoURL : ''}
     >
       {user.photoURL ? '' : user.displayName.substr(0, 1)}
     </Avatar>
   ) : (
-    <Avatar className={classes.avatar} src={AvatarImage} />
+    <Avatar
+      className={classes.avatar}
+      style={{ width: sizes, height: sizes }}
+      src={AvatarImage}
+    />
   );
 };
 

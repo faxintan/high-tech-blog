@@ -12,7 +12,11 @@ const UserAvatar = props => {
       style={{ width: sizes, height: sizes }}
       src={user.photoURL ? user.photoURL : ''}
     >
-      {user.photoURL ? '' : user.displayName && user.displayName.substr(0, 1)}
+      {user.photoURL
+        ? ''
+        : user.displayName
+        ? user.displayName.substr(0, 1)
+        : '?'}
     </Avatar>
   ) : (
     <Avatar

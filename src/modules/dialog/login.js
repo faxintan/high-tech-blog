@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { translate } from 'react-i18next';
 import Grid from '@material-ui/core/Grid';
+import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import Dialog from '@material-ui/core/Dialog';
 import DialogTitle from '@material-ui/core/DialogTitle';
@@ -13,6 +14,7 @@ import IconLock from '@material-ui/icons/Lock';
 import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
 import TextField from '@material-ui/core/TextField';
+import Hidden from '@material-ui/core/Hidden';
 import { withStyles } from '@material-ui/core/styles';
 import withMobileDialog from '@material-ui/core/withMobileDialog';
 
@@ -20,6 +22,7 @@ let email, password;
 class DialogLogin extends React.Component {
   handleConfirm = () => {
     const { onConfirm } = this.props;
+    if (!email || !password) return;
     onConfirm && onConfirm(email, password);
   };
 
@@ -32,7 +35,8 @@ class DialogLogin extends React.Component {
   };
 
   render() {
-    const { visible, t, classes, fullScreen, onCancel } = this.props;
+    const { visible, t, classes, fullScreen } = this.props;
+    const { onCancel, onLoginWithProvider } = this.props;
 
     return (
       <Dialog open={visible} fullScreen={fullScreen}>
@@ -80,8 +84,29 @@ class DialogLogin extends React.Component {
               />
             </Grid>
           </Grid>
+          <Hidden xsDown>
+            <Grid className={classes.provider} container>
+              <Grid item xs={3} />
+              <Grid className={classes.icon} item xs={2}>
+                <IconButton onClick={() => onLoginWithProvider(1)}>
+                  <Avatar>G</Avatar>
+                </IconButton>
+              </Grid>
+              <Grid className={classes.icon} item xs={2}>
+                <IconButton onClick={() => onLoginWithProvider(2)}>
+                  <Avatar>F</Avatar>
+                </IconButton>
+              </Grid>
+              <Grid className={classes.icon} item xs={2}>
+                <IconButton onClick={() => onLoginWithProvider(3)}>
+                  <Avatar>T</Avatar>
+                </IconButton>
+              </Grid>
+              <Grid item xs={3} />
+            </Grid>
+          </Hidden>
         </DialogContent>
-        <DialogActions className={classes.actions}>
+        <DialogActions>
           <Button
             variant={fullScreen ? 'contained' : 'text'}
             color="primary"
@@ -111,8 +136,11 @@ const styles = theme => ({
       minWidth: '400px',
     },
   },
-  actions: {
-    marginTop: theme.spacing(2),
+  provider: {
+    marginTop: theme.spacing(3),
+  },
+  icon: {
+    textAlign: 'center',
   },
 });
 

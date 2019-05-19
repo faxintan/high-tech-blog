@@ -11,6 +11,12 @@ import Avatar from '@modules/common/avatar';
 import DialogLogin from '@modules/dialog/login';
 import { withFirebaseApp } from '@context/firebase/index';
 
+const providers = [
+  'doSignInWithGoogle',
+  'doSignInWithFacebook',
+  'doSignInWithTwitter',
+];
+
 class UserCard extends React.Component {
   state = {
     isShowLogin: false,
@@ -21,6 +27,14 @@ class UserCard extends React.Component {
     auth.doSignInWithEmailAndPassword(email, password).then(user => {
       user && this.setState({ isShowLogin: false });
     });
+  };
+
+  handleLoginWithProvider = type => {
+    const { auth } = this.props;
+    auth[providers[type]] &&
+      auth[providers[type]]().then(user => {
+        user && this.setState({ isShowLogin: false });
+      });
   };
 
   handleLogout = () => {
@@ -83,6 +97,7 @@ class UserCard extends React.Component {
           visible={isShowLogin}
           onConfirm={this.handleLogin}
           onCancel={this.handleDialogClose}
+          onLoginWithProvider={this.handleLoginWithProvider}
         />
       </>
     );

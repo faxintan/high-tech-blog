@@ -19,8 +19,7 @@ class IndexPage extends React.PureComponent {
             height: '100%',
           }}
         >
-          <div style={{ textAlign: 'center' }}>{t('Hello Gatsby')}</div>
-          <div style={{ textAlign: 'center' }}>{t('confirm')}</div>
+          <div style={{ fontSize: '24px' }}>{t('Hello Gatsby')}</div>
         </div>
       </Layout>
     );

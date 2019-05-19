@@ -16,59 +16,84 @@ import TextField from '@material-ui/core/TextField';
 import { withStyles } from '@material-ui/core/styles';
 import withMobileDialog from '@material-ui/core/withMobileDialog';
 
-function DialogLogin(props) {
-  const { visible, onClose, t, classes, fullScreen } = props;
+let email, password;
+class DialogLogin extends React.Component {
+  handleConfirm = () => {
+    const { onConfirm } = this.props;
+    onConfirm && onConfirm(email, password);
+  };
 
-  return (
-    <Dialog open={visible} fullScreen={fullScreen}>
-      <DialogTitle className={classes.title} disableTypography={true}>
-        <Typography variant="h6">{t('Login')}</Typography>
-        <IconButton onClick={onClose}>
-          <IconClose />
-        </IconButton>
-      </DialogTitle>
-      <DialogContent className={classes.content}>
-        <Grid
-          container
-          spacing={2}
-          wrap="nowrap"
-          justify="center"
-          alignItems="flex-end"
-        >
-          <Grid item>
-            <IconEmail />
+  handleEmailChange = e => {
+    email = e.currentTarget.value;
+  };
+
+  handlePasswordChange = e => {
+    password = e.currentTarget.value;
+  };
+
+  render() {
+    const { visible, t, classes, fullScreen, onCancel } = this.props;
+
+    return (
+      <Dialog open={visible} fullScreen={fullScreen}>
+        <DialogTitle className={classes.title} disableTypography={true}>
+          <Typography variant="h6">{t('Login')}</Typography>
+          <IconButton onClick={onCancel}>
+            <IconClose />
+          </IconButton>
+        </DialogTitle>
+        <DialogContent className={classes.content}>
+          <Grid
+            container
+            spacing={2}
+            wrap="nowrap"
+            justify="center"
+            alignItems="flex-end"
+          >
+            <Grid item>
+              <IconEmail />
+            </Grid>
+            <Grid item xs={12}>
+              <TextField
+                fullWidth={true}
+                label={t('Email')}
+                onChange={this.handleEmailChange}
+              />
+            </Grid>
           </Grid>
-          <Grid item xs={12}>
-            <TextField fullWidth={true} label="请输入账号" />
+          <Grid
+            container
+            spacing={2}
+            wrap="nowrap"
+            justify="center"
+            alignItems="flex-end"
+          >
+            <Grid item>
+              <IconLock />
+            </Grid>
+            <Grid item xs={12}>
+              <TextField
+                type="password"
+                fullWidth={true}
+                label={t('Password')}
+                onChange={this.handlePasswordChange}
+              />
+            </Grid>
           </Grid>
-        </Grid>
-        <Grid
-          container
-          spacing={2}
-          wrap="nowrap"
-          justify="center"
-          alignItems="flex-end"
-        >
-          <Grid item>
-            <IconLock />
-          </Grid>
-          <Grid item xs={12}>
-            <TextField type="password" fullWidth={true} label="请输入密码" />
-          </Grid>
-        </Grid>
-      </DialogContent>
-      <DialogActions className={classes.actions}>
-        <Button
-          variant={fullScreen ? 'contained' : ''}
-          color="primary"
-          fullWidth={fullScreen}
-          onClick={onClose}
-        >
-          Confirm
-        </Button>
-      </DialogActions>
-    </Dialog>
-  );
+        </DialogContent>
+        <DialogActions className={classes.actions}>
+          <Button
+            variant={fullScreen ? 'contained' : 'text'}
+            color="primary"
+            fullWidth={fullScreen}
+            onClick={this.handleConfirm}
+          >
+            {t('Confirm')}
+          </Button>
+        </DialogActions>
+      </Dialog>
+    );
+  }
 }
 
 DialogLogin.propTypes = {

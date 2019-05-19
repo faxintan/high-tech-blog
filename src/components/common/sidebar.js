@@ -42,7 +42,6 @@ const styles = theme => ({
   },
   body: {
     flex: 'auto',
-    background: 'yellow',
   },
 });
 

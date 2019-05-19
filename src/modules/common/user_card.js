@@ -13,19 +13,31 @@ import { withFirebaseApp } from '@context/firebase/index';
 
 class UserCard extends React.Component {
   state = {
-    isLogin: false,
+    isShowLogin: false,
+  };
+
+  handleLogin = (email, password) => {
+    const { auth } = this.props;
+    auth.doSignInWithEmailAndPassword(email, password).then(user => {
+      user && this.setState({ isShowLogin: false });
+    });
+  };
+
+  handleLogout = () => {
+    const { auth } = this.props;
+    auth.doSignOut();
   };
 
   handleDialogOpen = () => {
-    this.setState({ isLogin: true });
+    this.setState({ isShowLogin: true });
   };
 
   handleDialogClose = () => {
-    this.setState({ isLogin: false });
+    this.setState({ isShowLogin: false });
   };
 
   render() {
-    const { isLogin } = this.state;
+    const { isShowLogin } = this.state;
     const { user, t, classes } = this.props;
 
     return (
@@ -48,7 +60,7 @@ class UserCard extends React.Component {
                 <Typography>{user.displayName}</Typography>
               </Grid>
               <Grid item>
-                <Typography variant="title1">
+                <Typography variant="caption">
                   {user.email}
                   {user.emailVerified ? (
                     <Verified className={classes.icon1} />
@@ -57,18 +69,21 @@ class UserCard extends React.Component {
                   )}
                 </Typography>
               </Grid>
+              <Button color="primary" onClick={this.handleLogout}>
+                {t('Logout')}
+              </Button>
             </>
           ) : (
-            <Button
-              size="small"
-              color="primary"
-              onClick={this.handleDialogOpen}
-            >
+            <Button color="primary" onClick={this.handleDialogOpen}>
               {t('Login')}
             </Button>
           )}
         </Grid>
-        <DialogLogin visible={isLogin} onClose={this.handleDialogClose} />
+        <DialogLogin
+          visible={isShowLogin}
+          onConfirm={this.handleLogin}
+          onCancel={this.handleDialogClose}
+        />
       </>
     );
   }

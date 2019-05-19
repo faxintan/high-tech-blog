@@ -10,8 +10,18 @@ class IndexPage extends React.PureComponent {
     const { t } = this.props;
     return (
       <Layout {...this.props}>
-        <div>{t('Hello Gatsby')}</div>
-        <div>{t('confirm')}</div>
+        <div
+          style={{
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            flexFlow: 'column nowrap',
+            height: '100%',
+          }}
+        >
+          <div style={{ textAlign: 'center' }}>{t('Hello Gatsby')}</div>
+          <div style={{ textAlign: 'center' }}>{t('confirm')}</div>
+        </div>
       </Layout>
     );
   }

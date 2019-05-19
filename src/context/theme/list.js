@@ -20,7 +20,7 @@ export default translate => {
           body1: {
             fontWeight: 500,
           },
-          title1: {
+          caption: {
             fontSize: 14,
           },
           subtitle1: {

@@ -18,6 +18,10 @@ import Hidden from '@material-ui/core/Hidden';
 import { withStyles } from '@material-ui/core/styles';
 import withMobileDialog from '@material-ui/core/withMobileDialog';
 
+import ChromeLogo from '@assets/images/chrome.png';
+import FacebookLogo from '@assets/images/facebook.png';
+import TwitterLogo from '@assets/images/twitter.png';
+
 let email, password;
 class DialogLogin extends React.Component {
   handleConfirm = () => {
@@ -89,17 +93,17 @@ class DialogLogin extends React.Component {
               <Grid item xs={3} />
               <Grid className={classes.icon} item xs={2}>
                 <IconButton onClick={() => onLoginWithProvider(0)}>
-                  <Avatar>G</Avatar>
+                  <Avatar src={ChromeLogo}>G</Avatar>
                 </IconButton>
               </Grid>
               <Grid className={classes.icon} item xs={2}>
                 <IconButton onClick={() => onLoginWithProvider(1)}>
-                  <Avatar>F</Avatar>
+                  <Avatar src={FacebookLogo}>F</Avatar>
                 </IconButton>
               </Grid>
               <Grid className={classes.icon} item xs={2}>
                 <IconButton onClick={() => onLoginWithProvider(2)}>
-                  <Avatar>T</Avatar>
+                  <Avatar src={TwitterLogo}>T</Avatar>
                 </IconButton>
               </Grid>
               <Grid item xs={3} />

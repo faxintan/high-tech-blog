@@ -17,6 +17,7 @@ module.exports = {
     description: 'An Awesome Blog',
   },
   plugins: [
+    `gatsby-plugin-react-helmet`,
     {
       resolve: 'gatsby-source-filesystem',
       options: {

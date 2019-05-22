@@ -1,5 +1,6 @@
 import React from 'react';
 import { graphql } from 'gatsby';
+import { Helmet } from "react-helmet";
 import { translate } from 'react-i18next';
 import { withI18next } from 'gatsby-plugin-i18next';
 
@@ -8,12 +9,16 @@ import EditorMarkdown from '@components/editor/markdown';
 
 class EditorPage extends React.PureComponent {
   render() {
-    // const { t } = this.props;
-    window.a = 1000;
+    const { t } = this.props;
     return (
-      <Layout {...this.props}>
-        <EditorMarkdown />
-      </Layout>
+      <>
+        <Helmet>
+          <title>{t('Hi-Tech Blog')}</title>
+        </Helmet>
+        <Layout {...this.props}>
+          <EditorMarkdown />
+        </Layout>
+      </>
     );
   }
 }

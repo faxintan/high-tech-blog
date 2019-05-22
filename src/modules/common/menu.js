@@ -25,25 +25,25 @@ class Menu extends React.Component {
       },
       {
         link: '/',
-        name: t('Waiting...'),
+        name: `${t('Waiting')}...`,
       },
       {
         link: '/',
-        name: t('Waiting...'),
+        name: `${t('Waiting')}...`,
       },
       {
         link: '/',
-        name: t('Waiting...'),
+        name: `${t('Waiting')}...`,
       },
       {
         link: '/',
-        name: t('Waiting...'),
+        name: `${t('Waiting')}...`,
       },
     ];
   }
 
   render() {
-    const { visible, t } = this.props;
+    const { visible } = this.props;
 
     return (
       <SideBar visible={visible} Header={<UserCard />}>

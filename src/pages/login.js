@@ -1,4 +1,6 @@
 import React from 'react';
+import { Helmet } from "react-helmet";
+import { translate } from 'react-i18next';
 import ThemeProvider from '@context/theme/index';
 import I18nextProvider from '@context/i18next/index';
 import FirebaseAppProveder from '@context/firebase/index';
@@ -7,19 +9,25 @@ import LoginDialog from '@modules/dialog/login';
 
 class LoginPage extends React.PureComponent {
   render() {
+    const { t } = this.props;
     return (
-      <FirebaseAppProveder>
-        <I18nextProvider pageContext={this.props.pageContext}>
-          <ThemeProvider>
-            <LoginDialog visible={true} />
-          </ThemeProvider>
-        </I18nextProvider>
-      </FirebaseAppProveder>
+      <>
+        <Helmet>
+          <title>{t('Login')}</title>
+        </Helmet>
+        <FirebaseAppProveder>
+          <I18nextProvider pageContext={this.props.pageContext}>
+            <ThemeProvider>
+              <LoginDialog visible={true} />
+            </ThemeProvider>
+          </I18nextProvider>
+        </FirebaseAppProveder>
+      </>
     );
   }
 }
 
-export default withI18next()(LoginPage);
+export default withI18next()(translate()(LoginPage));
 
 export const query = graphql`
   query($lng: String!) {

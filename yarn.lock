@@ -4195,6 +4195,13 @@ gatsby-plugin-page-creator@^2.0.12:
     parse-filepath "^1.0.1"
     slash "^1.0.0"
 
+gatsby-plugin-react-helmet@^3.0.12:
+  version "3.0.12"
+  resolved "https://registry.npm.taobao.org/gatsby-plugin-react-helmet/download/gatsby-plugin-react-helmet-3.0.12.tgz#805252b54ea4044d286d2158991429aa4f60aa02"
+  integrity sha1-gFJStU6kBE0obSFYmRQpqk9gqgI=
+  dependencies:
+    "@babel/runtime" "^7.0.0"
+
 gatsby-react-router-scroll@^2.0.7:
   version "2.0.7"
   resolved "https://registry.yarnpkg.com/gatsby-react-router-scroll/-/gatsby-react-router-scroll-2.0.7.tgz#b9425e366d4be546036080d85664d60ae76e6c29"
@@ -6033,6 +6040,11 @@ map-visit@^1.0.0:
   dependencies:
     object-visit "^1.0.0"
 
+marked@^0.6.2:
+  version "0.6.2"
+  resolved "https://registry.npm.taobao.org/marked/download/marked-0.6.2.tgz#c574be8b545a8b48641456ca1dbe0e37b6dccc1a"
+  integrity sha1-xXS+i1Rai0hkFFbKHb4ON7bczBo=
+
 md5-file@^3.1.1:
   version "3.2.3"
   resolved "https://registry.yarnpkg.com/md5-file/-/md5-file-3.2.3.tgz#f9bceb941eca2214a4c0727f5e700314e770f06f"
@@ -7776,7 +7788,7 @@ react-fast-compare@^2.0.2:
   resolved "https://registry.yarnpkg.com/react-fast-compare/-/react-fast-compare-2.0.4.tgz#e84b4d455b0fec113e0402c329352715196f81f9"
   integrity sha512-suNP+J1VU1MWFKcyt7RtjiSWUjvidmQSlqu+eHslq+342xCbGTYmC0mEhPCOHxlW0CywylOC1u2DFAT+bv4dBw==
 
-react-helmet@^5.2.0:
+react-helmet@^5.2.0, react-helmet@^5.2.1:
   version "5.2.1"
   resolved "https://registry.yarnpkg.com/react-helmet/-/react-helmet-5.2.1.tgz#16a7192fdd09951f8e0fe22ffccbf9bb3e591ffa"
   integrity sha512-CnwD822LU8NDBnjCpZ4ySh8L6HYyngViTZLfBBb3NjtrpN8m49clH8hidHouq20I51Y6TpCTISCBbqiY5GamwA==

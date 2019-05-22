@@ -1,6 +1,6 @@
 import React from 'react';
+import { navigate } from 'gatsby';
 import PropTypes from 'prop-types';
-import { translate } from 'react-i18next';
 import Grid from '@material-ui/core/Grid';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
@@ -8,7 +8,6 @@ import Dialog from '@material-ui/core/Dialog';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogActions from '@material-ui/core/DialogActions';
-import IconClose from '@material-ui/icons/Close';
 import IconEmail from '@material-ui/icons/Email';
 import IconLock from '@material-ui/icons/Lock';
 import IconButton from '@material-ui/core/IconButton';
@@ -17,19 +16,20 @@ import TextField from '@material-ui/core/TextField';
 import Hidden from '@material-ui/core/Hidden';
 import { withStyles } from '@material-ui/core/styles';
 import withMobileDialog from '@material-ui/core/withMobileDialog';
+import { withI18next } from '@context/i18next/index';
+import { withFirebaseApp } from '@context/firebase/index';
 
 import ChromeLogo from '@assets/images/chrome.png';
 import FacebookLogo from '@assets/images/facebook.png';
 import TwitterLogo from '@assets/images/twitter.png';
 
 let email, password;
-class DialogLogin extends React.Component {
-  handleConfirm = () => {
-    const { onConfirm } = this.props;
-    if (!email || !password) return;
-    onConfirm && onConfirm(email, password);
-  };
+const validate = (email, password) => {
+  if (!email || !password) return false;
+  return true;
+};
 
+class DialogLogin extends React.Component {
   handleEmailChange = e => {
     email = e.currentTarget.value;
   };
@@ -38,17 +38,37 @@ class DialogLogin extends React.Component {
     password = e.currentTarget.value;
   };
 
+  handleLogin = () => {
+    if (!validate(email, password)) return; // TODO(Louis): failed to login
+    this.props.auth.doSignInWithEmailAndPassword(email, password).then(user => {
+      user && this.hanldeLoginSuccess(user);
+    });
+  };
+
+  handleLoginWithProvider = type => {
+    const providers = [
+      'doSignInWithGoogle',
+      'doSignInWithFacebook',
+      'doSignInWithTwitter',
+    ];
+    this.props.auth[providers[type]]().then(user => {
+      user && this.hanldeLoginSuccess(user);
+    });
+  };
+
+  hanldeLoginSuccess = user => {
+    const { i18next, onSuccess } = this.props;
+    onSuccess ? onSuccess(user) : navigate(`/${i18next.lng}/`);
+  };
+
   render() {
-    const { visible, t, classes, fullScreen } = this.props;
-    const { onCancel, onLoginWithProvider } = this.props;
+    const { visible, IconClose, i18next, classes, fullScreen } = this.props;
 
     return (
       <Dialog open={visible} fullScreen={fullScreen}>
         <DialogTitle className={classes.title} disableTypography={true}>
-          <Typography variant="h6">{t('Login')}</Typography>
-          <IconButton onClick={onCancel}>
-            <IconClose />
-          </IconButton>
+          <Typography variant="h6">{i18next.t('Login')}</Typography>
+          {IconClose}
         </DialogTitle>
         <DialogContent className={classes.content}>
           <Grid
@@ -64,7 +84,7 @@ class DialogLogin extends React.Component {
             <Grid item xs={12}>
               <TextField
                 fullWidth={true}
-                label={t('Email')}
+                label={i18next.t('Email')}
                 onChange={this.handleEmailChange}
               />
             </Grid>
@@ -83,7 +103,7 @@ class DialogLogin extends React.Component {
               <TextField
                 type="password"
                 fullWidth={true}
-                label={t('Password')}
+                label={i18next.t('Password')}
                 onChange={this.handlePasswordChange}
               />
             </Grid>
@@ -92,17 +112,17 @@ class DialogLogin extends React.Component {
             <Grid className={classes.provider} container>
               <Grid item xs={3} />
               <Grid className={classes.icon} item xs={2}>
-                <IconButton onClick={() => onLoginWithProvider(0)}>
+                <IconButton onClick={() => this.handleLoginWithProvider(0)}>
                   <Avatar src={ChromeLogo}>G</Avatar>
                 </IconButton>
               </Grid>
               <Grid className={classes.icon} item xs={2}>
-                <IconButton onClick={() => onLoginWithProvider(1)}>
+                <IconButton onClick={() => this.handleLoginWithProvider(1)}>
                   <Avatar src={FacebookLogo}>F</Avatar>
                 </IconButton>
               </Grid>
               <Grid className={classes.icon} item xs={2}>
-                <IconButton onClick={() => onLoginWithProvider(2)}>
+                <IconButton onClick={() => this.handleLoginWithProvider(2)}>
                   <Avatar src={TwitterLogo}>T</Avatar>
                 </IconButton>
               </Grid>
@@ -115,9 +135,9 @@ class DialogLogin extends React.Component {
             variant={fullScreen ? 'contained' : 'text'}
             color="primary"
             fullWidth={fullScreen}
-            onClick={this.handleConfirm}
+            onClick={this.handleLogin}
           >
-            {t('Confirm')}
+            {i18next.t('Confirm')}
           </Button>
         </DialogActions>
       </Dialog>
@@ -148,6 +168,8 @@ const styles = theme => ({
   },
 });
 
-export default translate()(
-  withStyles(styles)(withMobileDialog({ breakpoint: 'xs' })(DialogLogin))
+export default withFirebaseApp(
+  withI18next(
+    withStyles(styles)(withMobileDialog({ breakpoint: 'xs' })(DialogLogin))
+  )
 );

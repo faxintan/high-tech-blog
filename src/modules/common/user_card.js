@@ -5,49 +5,30 @@ import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import Verified from '@material-ui/icons/VerifiedUser';
 import Unverified from '@material-ui/icons/ErrorOutline';
+import IconClose from '@material-ui/icons/Close';
+import IconButton from '@material-ui/core/IconButton';
 import { withStyles } from '@material-ui/core/styles';
 
+import Link from '@components/common/link';
 import Avatar from '@modules/common/avatar';
 import DialogLogin from '@modules/dialog/login';
 import { withFirebaseApp } from '@context/firebase/index';
-
-const providers = [
-  'doSignInWithGoogle',
-  'doSignInWithFacebook',
-  'doSignInWithTwitter',
-];
 
 class UserCard extends React.Component {
   state = {
     isShowLogin: false,
   };
 
-  handleLogin = (email, password) => {
-    const { auth } = this.props;
-    auth.doSignInWithEmailAndPassword(email, password).then(user => {
-      user && this.setState({ isShowLogin: false });
-    });
-  };
-
-  handleLoginWithProvider = type => {
-    const { auth } = this.props;
-    auth[providers[type]] &&
-      auth[providers[type]]().then(user => {
-        user && this.setState({ isShowLogin: false });
-      });
-  };
-
-  handleLogout = () => {
-    const { auth } = this.props;
-    auth.doSignOut();
-  };
-
-  handleDialogOpen = () => {
+  handleLoginOpen = () => {
     this.setState({ isShowLogin: true });
   };
 
-  handleDialogClose = () => {
+  handleLoginClose = () => {
     this.setState({ isShowLogin: false });
+  };
+
+  handleLogout = () => {
+    this.props.auth.doSignOut();
   };
 
   render() {
@@ -83,21 +64,29 @@ class UserCard extends React.Component {
                   )}
                 </Typography>
               </Grid>
-              <Button color="primary" onClick={this.handleLogout}>
-                {t('Logout')}
-              </Button>
+              <Grid item container justify="center">
+                <Button color="primary" onClick={this.handleLoginOpen}>
+                  {t('Switch')}
+                </Button>
+                <Button color="primary" onClick={this.handleLogout}>
+                  {t('Logout')}
+                </Button>
+              </Grid>
             </>
           ) : (
-            <Button color="primary" onClick={this.handleDialogOpen}>
-              {t('Login')}
+            <Button color="primary">
+              <Link to="/login">{t('Login')}</Link>
             </Button>
           )}
         </Grid>
         <DialogLogin
+          IconClose={
+            <IconButton onClick={this.handleLoginClose}>
+              <IconClose />
+            </IconButton>
+          }
           visible={isShowLogin}
-          onConfirm={this.handleLogin}
-          onCancel={this.handleDialogClose}
-          onLoginWithProvider={this.handleLoginWithProvider}
+          onSuccess={this.handleLoginClose}
         />
       </>
     );
@@ -106,7 +95,7 @@ class UserCard extends React.Component {
 
 const styles = theme => ({
   root: {
-    height: theme.spacing(20),
+    height: theme.spacing(24),
   },
   icon1: {
     marginLeft: theme.spacing(0.5),

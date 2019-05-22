@@ -33,7 +33,7 @@ class FirebaseAppProvider extends React.PureComponent {
 
       const auth = new FirebaseAuth(values[0], app.auth(), config);
 
-      auth.onAuthStateChanged(user => {
+      this.unsubscribe = auth.onAuthStateChanged(user => {
         this.setState({ user });
       });
 
@@ -43,6 +43,10 @@ class FirebaseAppProvider extends React.PureComponent {
         store: app.firestore(),
       });
     });
+  }
+
+  componentWillUnmount() {
+    this.unsubscribe && this.unsubscribe(); // 解除事件监听，防止内存泄漏
   }
 
   render() {
